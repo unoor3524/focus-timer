@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Timer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="pomodoro">
+        <div id="clockWrapper" class="row">
+            <div class="clock"></div>
+        </div>
+        
+        <div class="row" id="controls">
+            <button class="control-btns splashable" id="btnStartTimer" data-mode="start"><i class="las la-play"></i></button>
+            <button class="control-btns splashable" id="btnResetTimer"><i class="las la-redo-alt"></i></button>
+        </div>
+        <div class="row session-break-container">
+            <div class="session-info info-section">
+                <h3>Session</h3>
+                <div class="controls">
+                    <button class="splashable decrement-session session-btn"><i class="las la-minus"></i></button>
+                    <span class="session-length">0</span>
+                    <button class="splashable increment-session session-btn"><i class="las la-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="break-info info-section">
+                <h3>Break</h3>
+                <div class="controls">
+                    <button class="splashable decrement-break session-btn"><i class="las la-minus"></i></button>
+                    <span class="break-length">0</span>
+                    <button class="splashable increment-break session-btn"><i class="las la-plus"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="statRow">
+        <h1 id="stats">Pomodoro Focus Timer</h1>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.js"></script>
+    <script src="./utility.js"></script>
+    <script src="./pomodoro.js"></script>
+    <script src="./app.js"></script>
+</body>
+
+</html>
