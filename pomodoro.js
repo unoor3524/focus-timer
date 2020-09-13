@@ -1,36 +1,36 @@
 class Pomodoro {
-    #sessionLength = 25;
-    #breakLength = 5;
-    #clockInstance = null;
-    #clockDOMSelector = "";
-    #currentMode = "";
-    #modesEnum = {
+    sessionLength = 25;
+    breakLength = 5;
+    clockInstance = null;
+    clockDOMSelector = "";
+    currentMode = "";
+    modesEnum = {
         SESSION: "session",
         BREAK: "break",
         CUSTOM: "custom"
     };
-    #onTick = null;
+    onTick = null;
 
     constructor(clockDOMSelector = "", opt) {
-        this.#clockDOMSelector = clockDOMSelector;
+        this.clockDOMSelector = clockDOMSelector;
         if (hasKeyInObject(opt, 'onTick')) {
-            this.#onTick = opt.onTick;
+            this.onTick = opt.onTick;
         }
     }
 
     initializeSession() {
-        this.initializeClock({mode: this.#modesEnum.SESSION});
-        this.#currentMode = this.#modesEnum.SESSION;
+        this.initializeClock({mode: this.modesEnum.SESSION});
+        this.currentMode = this.modesEnum.SESSION;
     }
 
     initializeBreak() {
-        this.initializeClock({mode: this.#modesEnum.BREAK});
-        this.#currentMode = this.#modesEnum.BREAK;
+        this.initializeClock({mode: this.modesEnum.BREAK});
+        this.currentMode = this.modesEnum.BREAK;
     }
 
     initializeClock(opt) {
         try {
-            if (this.#clockDOMSelector.trim() == ""){
+            if (this.clockDOMSelector.trim() == ""){
                 throw new PomodoroException("Please provide a dom element reference to render clock");
             }
             if (!hasKeyInObject(opt, "mode")){
@@ -39,13 +39,13 @@ class Pomodoro {
 
             let totalDuration = 0;
             switch(opt.mode) {
-                case this.#modesEnum.SESSION:
-                    totalDuration = this.#sessionLength*60;
+                case this.modesEnum.SESSION:
+                    totalDuration = this.sessionLength*60;
                     break;
-                case this.#modesEnum.BREAK:
-                    totalDuration = this.#breakLength*60;
+                case this.modesEnum.BREAK:
+                    totalDuration = this.breakLength*60;
                     break;
-                case this.#modesEnum.CUSTOM:
+                case this.modesEnum.CUSTOM:
                     if (!hasKeyInObject(opt, "duration")) {
                         throw new PomodoroException("Duration of clock required in custom mode");
                     }
@@ -55,9 +55,9 @@ class Pomodoro {
                     throw new PomodoroException("invalid parameter 'mode'");
             }
 
-            if (this.#clockInstance !== null) {
-                this.#clockInstance.stop();
-                this.#clockInstance = null;
+            if (this.clockInstance !== null) {
+                this.clockInstance.stop();
+                this.clockInstance = null;
             }
 
             const interValCallBack = (minutesLeft, secondsLeft) => {
@@ -66,12 +66,12 @@ class Pomodoro {
                     this.isSession ? this.initializeBreak() : this.initializeSession();
                     this.start();
                 }
-                if (this.#onTick!== null) {
-                    this.#onTick(minutesLeft, secondsLeft);
+                if (this.onTick!== null) {
+                    this.onTick(minutesLeft, secondsLeft);
                 }
             }
 
-            this.#clockInstance = $(this.#clockDOMSelector).FlipClock(totalDuration, {
+            this.clockInstance = $(this.clockDOMSelector).FlipClock(totalDuration, {
 		        clockFace: 'MinuteCounter',
 		        countdown: true,
                 autoStart: false,
@@ -101,11 +101,11 @@ class Pomodoro {
     }
 
     start() {
-        this.#clockInstance.start();
+        this.clockInstance.start();
     }
 
     stop() {
-        this.#clockInstance.stop();
+        this.clockInstance.stop();
     }
 
     reset() {
@@ -113,31 +113,31 @@ class Pomodoro {
     }
 
     isSession() {
-        return this.#currentMode === this.#modesEnum.SESSION;
+        return this.currentMode === this.modesEnum.SESSION;
     }
 
     isBreak() {
-        return this.#currentMode === this.#modesEnum.BREAK;
+        return this.currentMode === this.modesEnum.BREAK;
     }
 
     updateSessionDuration(valChange) {
-        if (this.#sessionLength + valChange > 0) {
-            this.#sessionLength += valChange;
+        if (this.sessionLength + valChange > 0) {
+            this.sessionLength += valChange;
         }
     }
 
     updateBreakDuration(valChange) {
-        if (this.#breakLength + valChange > 0) {
-            this.#breakLength += valChange;
+        if (this.breakLength + valChange > 0) {
+            this.breakLength += valChange;
         }
     }
 
     getSessionLength() {
-        return this.#sessionLength;
+        return this.sessionLength;
     }
 
     getBreakLength() {
-        return this.#breakLength;
+        return this.breakLength;
     }
 }
 
